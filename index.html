@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRIVERID // FULL GRID SPEC</title>
+    <title>DRIVERID // FINAL SPEC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -11,15 +11,8 @@
         :root {
             --neon-accent: #ccff00;
             --ferrari-red: #ff2800;
-            --merc-teal: #00d2be;
-            --rb-blue: #061993;
-            --mcl-orange: #ff8000;
             --bg-dark: #050505;
             --panel-bg: #111111;
-            
-            --soft-tyre: #ff3333;
-            --medium-tyre: #ffe600;
-            --hard-tyre: #ffffff;
             
             --sector-green: #00ff00;
             --sector-yellow: #ffff00;
@@ -100,18 +93,49 @@
 
         /* Tyres */
         .tyre-circle { width: 40px; height: 40px; border-radius: 50%; border: 3px solid; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Oswald'; font-size: 1.2rem; background: #111; }
-        .tyre-soft { border-color: var(--soft-tyre); color: var(--soft-tyre); }
-        .tyre-medium { border-color: var(--medium-tyre); color: var(--medium-tyre); }
-        .tyre-hard { border-color: var(--hard-tyre); color: var(--hard-tyre); }
+        .tyre-soft { border-color: var(--soft-tyre); color: #ff3333; }
+        .tyre-medium { border-color: #ffe600; color: #ffe600; }
+        .tyre-hard { border-color: #ffffff; color: #ffffff; }
         
         /* Sectors */
         .sector-box { height: 8px; flex: 1; background: #222; margin: 0 2px; transition: background 0.3s; }
         .sector-green { background: var(--sector-green); box-shadow: 0 0 5px var(--sector-green); }
         .sector-yellow { background: var(--sector-yellow); box-shadow: 0 0 5px var(--sector-yellow); }
         .sector-purple { background: var(--sector-purple); box-shadow: 0 0 5px var(--sector-purple); }
+
+        /* ADMIN CONSOLE */
+        #admin-console {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: rgba(0,0,0,0.95);
+            border-top: 2px solid var(--ferrari-red);
+            z-index: 100;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #00ff00;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        .log-entry { margin-bottom: 4px; border-bottom: 1px solid #333; padding-bottom: 2px; }
+        .log-error { color: var(--ferrari-red); }
+        .log-warn { color: orange; }
+        .log-success { color: var(--neon-accent); }
     </style>
 </head>
 <body class="h-screen w-screen flex flex-col relative">
+
+    <!-- ADMIN CONSOLE -->
+    <div id="admin-console">
+        <div class="text-white font-bold mb-2 sticky top-0 bg-black border-b border-gray-700 pb-1">
+            FIA TECHNICAL DELEGATE // SYSTEM LOGS
+            <span class="float-right cursor-pointer" onclick="document.getElementById('admin-console').style.display='none'">[CLOSE]</span>
+        </div>
+        <div id="log-content"></div>
+    </div>
 
     <!-- Background Marquee -->
     <div class="marquee-container">
@@ -126,7 +150,7 @@
         <div class="w-full max-w-lg p-6 md:p-8 relative z-10 animate-slide-up my-auto">
             <div class="mb-6 text-center">
                 <h1 class="text-6xl font-bold tracking-tighter mb-2 italic">DRIVER<span class="text-[#ccff00]">ID</span></h1>
-                <p class="text-gray-400 tracking-widest text-xs uppercase">Telemetry System V13.0 // Full Grid Spec</p>
+                <p class="text-gray-400 tracking-widest text-xs uppercase">Telemetry System V16.0 // Final Spec</p>
             </div>
 
             <form id="login-form" class="space-y-6">
@@ -134,7 +158,7 @@
                 <div class="relative group">
                     <input type="text" id="username-input" required
                         class="w-full bg-transparent border-b-2 border-gray-700 text-3xl font-bold text-white py-2 focus:outline-none focus:border-[#ccff00] transition-colors uppercase placeholder-gray-800"
-                        placeholder="ENTER CALLSIGN">
+                        placeholder="ENTER CALLSIGN (E.G. RUSSELL)">
                     <div class="absolute right-0 top-4 text-[#ccff00] opacity-0 group-focus-within:opacity-100 transition-opacity">
                         <i data-lucide="terminal"></i>
                     </div>
@@ -185,10 +209,15 @@
             <h2 class="text-2xl font-bold mb-6 text-[#ccff00]">CONFIG</h2>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-mono text-gray-500 mb-2 uppercase">Diagnostic: Active Model</label>
-                    <input type="text" id="model-input" 
+                    <label class="block text-xs font-mono text-gray-500 mb-2 uppercase">Admin Override Code</label>
+                    <input type="password" id="admin-code-input" 
                         class="w-full bg-black border border-gray-700 p-3 text-white font-mono text-sm focus:border-[#ccff00] focus:outline-none"
-                        readonly>
+                        placeholder="ENTER CODE TO VIEW LOGS" oninput="checkAdminCode(this)">
+                    <p class="text-xs text-gray-500 mt-2">Enter 0211 to reveal system diagnostics.</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-gray-500 mb-2 uppercase">Active Model ID</label>
+                    <input type="text" id="model-input" class="w-full bg-black border border-gray-700 p-3 text-gray-500 font-mono text-xs" readonly>
                 </div>
             </div>
         </div>
@@ -322,7 +351,7 @@
     </div>
 
     <script>
-        const API_KEY = "AIzaSyA7Oyq-ZDNUnxhYS5pvgRhWjFU_UF7hbX8";
+        const API_KEY = "AIzaSyDvhAB5FtjVogDnd2iAQXa49CZcPi4o1wQ";
         
         // --- DATA CONSTANTS ---
         const PERSONALITIES = {
@@ -347,7 +376,7 @@
             "STANDARD": { name: "PIT WALL", role: "Standard", team: "NEUTRAL", prompt: "Professional F1 Engineer. Calm, data-driven.", welcome: "Radio check. Systems normal." }
         };
 
-        // --- FULL GRID MEME DATABASE) ---
+        // --- FULL GRID MEME DATABASE ---
         const MEME_DB = {
             // RED BULL
             "MAX": { title: "DUDUDUDU", url: "https://media.tenor.com/N6uXoR6wW2AAAAAM/max-verstappen-haha-yes.gif", text: "SIMPLY LOVELY" },
@@ -361,7 +390,7 @@
 
             // MERCEDES (George & Kimi)
             "GEORGE": { title: "THE POSE", url: "https://media.tenor.com/60kKq_Zz7CgAAAAM/george-russell-pose.gif", text: "FACTS." },
-            "RUSSELL": { title: "OSAMA BIN RUSSELL", url: "https://media.tenor.com/60kKq_Zz7CgAAAAM/george-russell-pose.gif", text: "IT WAS THE FORECAST" },
+            "RUSSELL": { title: "OSAMA BIN RUSSELL", url: "https://media.tenor.com/60kKq_Zz7CgAAAAM/george-russell-pose.gif", text: "I WAS FORECAST A PODIUM" },
             "KIMI": { title: "THE PRODIGY", url: "https://media.tenor.com/K_yQ1xXzJzAAAAAM/kimi-raikkonen-drink.gif", text: "NOT THAT KIMI (BUT STILL FAST)" },
             "ANTONELLI": { title: "ROOKIE 1", url: "https://media.tenor.com/K_yQ1xXzJzAAAAAM/kimi-raikkonen-drink.gif", text: "SKIP F3? NO PROBLEM." },
 
@@ -374,7 +403,7 @@
             // ASTON MARTIN
             "ALONSO": { title: "EL PLAN", url: "https://media.tenor.com/5h8w7r_tqAAAAAAM/fernando-alonso-alpina.gif", text: "QUE GRANDE ERES MAGIC" },
             "FERNANDO": { title: "ROOKIE OF THE YEAR", url: "https://media.tenor.com/5h8w7r_tqAAAAAAM/fernando-alonso-alpina.gif", text: "FOREVER YOUNG" },
-            "LANCE": { title: "THE IDIOT", url: "https://media.tenor.com/0vK3q8tXwWAAAAAM/lance-stroll.gif", text: "I HIT THE WALL" },
+            "LANCE": { title: "WINDOW LICKER", url: "https://media.tenor.com/0vK3q8tXwWAAAAAM/lance-stroll.gif", text: "I HIT THE WALL" },
             "STROLL": { title: "INTERGALACTIC", url: "https://media.tenor.com/0vK3q8tXwWAAAAAM/lance-stroll.gif", text: "DAD BOUGHT THE TEAM" },
 
             // ALPINE
@@ -418,7 +447,14 @@
         let currentUser = null;
         let selectedPersonality = "STANDARD";
         let chatHistory = [];
-        const MODEL_CASCADE = [ "gemini-3-pro-preview", "gemini-flash-latest", "gemini-flash-lite-latest", "gemini-1.5-flash-latest" ];
+        
+        // STRICT MODEL SPEC AS REQUESTED (From your screenshot)
+        const MODEL_CASCADE = [
+            "gemini-3-pro-preview",
+            "gemini-flash-latest",
+            "gemini-flash-lite-latest",
+            "gemini-2.5-flash-preview-09-2025"
+        ];
         let currentModel = "SEARCHING"; 
 
         // DOM Elements
@@ -444,6 +480,8 @@
         const s1 = document.getElementById('s1');
         const s2 = document.getElementById('s2');
         const s3 = document.getElementById('s3');
+        const adminConsole = document.getElementById('admin-console');
+        const logContent = document.getElementById('log-content');
 
         // --- INIT ---
         window.addEventListener('load', () => {
@@ -468,6 +506,24 @@
                 div.onclick = () => { selectedPersonality = key; renderPersonalitySelect(); };
                 engineerGrid.appendChild(div);
             }
+        }
+
+        function checkAdminCode(input) {
+            if (input.value === "0211") {
+                adminConsole.style.display = 'block';
+                toggleSettings();
+                logMessage("ADMIN ACCESS GRANTED. DEBUG MODE ACTIVE.", "success");
+                input.value = "";
+            }
+        }
+
+        function logMessage(msg, type = "info") {
+            const div = document.createElement('div');
+            div.className = `log-entry log-${type}`;
+            const time = new Date().toISOString().split('T')[1].split('.')[0];
+            div.innerText = `[${time}] ${msg}`;
+            logContent.appendChild(div);
+            logContent.scrollTop = logContent.scrollHeight;
         }
 
         // --- RACE CONTROL LOGIC ---
@@ -528,7 +584,6 @@
             const driverTeam = identifyDriverTeam(driver);
             const p = PERSONALITIES[personalityKey];
             
-            // Special Cases
             if (driver.toUpperCase().includes("LEWIS") && personalityKey === "BONO") {
                 return "The user is Lewis Hamilton. You are Bono. Lewis has left for Ferrari. You are still at Mercedes. You should act nostalgic, sad, or conflicted. 'Lewis? I'm not your engineer anymore mate...'";
             }
@@ -539,7 +594,6 @@
                 return "The user is Max. You are Christian. You are fully supportive, plotting against rivals. 'Let's get them Max.'";
             }
 
-            // General Team Logic
             if (driverTeam === p.team) {
                 return `The user is a driver for your team (${p.team}). Be supportive, technical, and treat them as your driver.`;
             } else if (driverTeam !== "UNKNOWN" && p.team !== "NEUTRAL") {
@@ -568,7 +622,7 @@
             const upperUser = username.toUpperCase();
             let meme = MEME_DB[upperUser];
             
-            // Partial match fallback for longer phrases
+            // Check partials if no exact match
             if (!meme) {
                 for (const key in MEME_DB) { if (upperUser.includes(key)) { meme = MEME_DB[key]; break; } }
             }
@@ -637,9 +691,14 @@
         function autoResize(t) { t.style.height = 'auto'; t.style.height = t.scrollHeight + 'px'; }
 
         async function fetchWithFallback(text, attempt = 0) {
-            if (attempt >= MODEL_CASCADE.length) throw new Error("Link failure.");
+            if (attempt >= MODEL_CASCADE.length) {
+                logMessage("ALL MODELS FAILED. FATAL ERROR.", "error");
+                throw new Error("Link failure.");
+            }
             const modelToTry = MODEL_CASCADE[attempt];
             document.getElementById('engineer-display').innerText = `LINKING: ${modelToTry.split('-')[1].toUpperCase()}...`;
+            
+            logMessage(`Attempting connection to ${modelToTry}...`);
             
             const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelToTry}:generateContent?key=${API_KEY}`;
             const p = PERSONALITIES[selectedPersonality];
@@ -650,7 +709,6 @@
                 Identity: ${p.prompt}
                 Context: ${contextString}
                 User Input: ${text}
-                
                 Respond in character. Keep it short (like a radio message).
             `;
 
@@ -661,13 +719,21 @@
                     body: JSON.stringify({ contents: [{ parts: [{ text: finalPrompt }] }] })
                 });
 
-                if (!response.ok) return fetchWithFallback(text, attempt + 1);
+                if (!response.ok) {
+                    const err = await response.json();
+                    logMessage(`Model ${modelToTry} FAILED: ${err.error?.message || response.status}`, "warn");
+                    return fetchWithFallback(text, attempt + 1);
+                }
                 const data = await response.json();
+                logMessage(`Model ${modelToTry} CONNECTED successfully.`, "success");
                 currentModel = modelToTry;
                 document.getElementById('engineer-display').innerText = `RADIO: ${p.name}`;
                 document.getElementById('model-input').value = currentModel;
                 return data;
-            } catch (error) { return fetchWithFallback(text, attempt + 1); }
+            } catch (error) { 
+                logMessage(`Network Error on ${modelToTry}: ${error.message}`, "error");
+                return fetchWithFallback(text, attempt + 1); 
+            }
         }
 
         chatForm.addEventListener('submit', async (e) => {
