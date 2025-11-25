@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRIVERID // RIVALRY SPEC</title>
+    <title>DRIVERID // FULL GRID SPEC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -126,7 +126,7 @@
         <div class="w-full max-w-lg p-6 md:p-8 relative z-10 animate-slide-up my-auto">
             <div class="mb-6 text-center">
                 <h1 class="text-6xl font-bold tracking-tighter mb-2 italic">DRIVER<span class="text-[#ccff00]">ID</span></h1>
-                <p class="text-gray-400 tracking-widest text-xs uppercase">Telemetry System V12.0 // Rivalry Spec</p>
+                <p class="text-gray-400 tracking-widest text-xs uppercase">Telemetry System V13.0 // Full Grid Spec</p>
             </div>
 
             <form id="login-form" class="space-y-6">
@@ -134,7 +134,7 @@
                 <div class="relative group">
                     <input type="text" id="username-input" required
                         class="w-full bg-transparent border-b-2 border-gray-700 text-3xl font-bold text-white py-2 focus:outline-none focus:border-[#ccff00] transition-colors uppercase placeholder-gray-800"
-                        placeholder="ENTER CALLSIGN">
+                        placeholder="ENTER CALLSIGN (E.G. LANDO)">
                     <div class="absolute right-0 top-4 text-[#ccff00] opacity-0 group-focus-within:opacity-100 transition-opacity">
                         <i data-lucide="terminal"></i>
                     </div>
@@ -347,12 +347,65 @@
             "STANDARD": { name: "PIT WALL", role: "Standard", team: "NEUTRAL", prompt: "Professional F1 Engineer. Calm, data-driven.", welcome: "Radio check. Systems normal." }
         };
 
+        // --- FULL GRID MEME DATABASE (RESTORED) ---
         const MEME_DB = {
+            // RED BULL
             "MAX": { title: "DUDUDUDU", url: "https://media.tenor.com/N6uXoR6wW2AAAAAM/max-verstappen-haha-yes.gif", text: "SIMPLY LOVELY" },
-            "LANDO": { title: "FRIDAY THEN", url: "https://media.tenor.com/P_C9uOQ4s5oAAAAM/lando-norris-dancing.gif", text: "SATURDAY SUNDAY WHAT?" },
+            "CHECO": { title: "MINISTER OF DEFENCE", url: "https://media.tenor.com/2Xy-j-4gW2cAAAAM/checo-perez-sergio-perez.gif", text: "INTIMIDATING" },
+            
+            // FERRARI (Lewis & Charles)
+            "LEWIS": { title: "FERRARI RED", url: "https://media.tenor.com/T_y_tJ5_K9AAAAAM/lewis-hamilton-mercedes.gif", text: "BONO MY TIRES ARE GONE (BUT IN ITALIAN)" },
+            "HAMILTON": { title: "BLESSED", url: "https://media.tenor.com/T_y_tJ5_K9AAAAAM/lewis-hamilton-mercedes.gif", text: "GET IN THERE LEWIS" },
             "CHARLES": { title: "PAIN", url: "https://media.tenor.com/W3tY2Qc_xJAAAAAM/charles-leclerc-scream.gif", text: "NOOOOOOOOO!" },
+            "LECLERC": { title: "I AM STUPID", url: "https://media.tenor.com/J4p7l_tQhBwAAAAM/leclerc-charles-leclerc.gif", text: "WE ARE CHECKING" },
+
+            // MERCEDES (George & Kimi)
             "GEORGE": { title: "THE POSE", url: "https://media.tenor.com/60kKq_Zz7CgAAAAM/george-russell-pose.gif", text: "FACTS." },
-            "TOTO": { title: "HEADPHONES", url: "https://media.tenor.com/vHq_tqAAAAAAM/toto-wolff-smash-headphones.gif", text: "NO MIKEY NO!" }
+            "RUSSELL": { title: "YABBA DABBA DOO", url: "https://media.tenor.com/60kKq_Zz7CgAAAAM/george-russell-pose.gif", text: "IT WAS THE FORECAST" },
+            "KIMI": { title: "THE PRODIGY", url: "https://media.tenor.com/K_yQ1xXzJzAAAAAM/kimi-raikkonen-drink.gif", text: "NOT THAT KIMI (BUT STILL FAST)" },
+            "ANTONELLI": { title: "ROOKIE 1", url: "https://media.tenor.com/K_yQ1xXzJzAAAAAM/kimi-raikkonen-drink.gif", text: "SKIP F3? NO PROBLEM." },
+
+            // MCLAREN
+            "LANDO": { title: "FRIDAY THEN", url: "https://media.tenor.com/P_C9uOQ4s5oAAAAM/lando-norris-dancing.gif", text: "SATURDAY SUNDAY WHAT?" },
+            "NORRIS": { title: "BROKEN TROPHY", url: "https://media.tenor.com/ZzK8yXbVljoAAAAM/lando-norris-champagne.gif", text: "OOPS." },
+            "OSCAR": { title: "WEBBER 2.0", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/oscar-piastri.gif", text: "CALM." },
+            "PIASTRI": { title: "OSCAR P1ASTRI", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/oscar-piastri.gif", text: "NO DRAMA MATE" },
+
+            // ASTON MARTIN
+            "ALONSO": { title: "EL PLAN", url: "https://media.tenor.com/5h8w7r_tqAAAAAAM/fernando-alonso-alpina.gif", text: "QUE GRANDE ERES MAGIC" },
+            "FERNANDO": { title: "ROOKIE OF THE YEAR", url: "https://media.tenor.com/5h8w7r_tqAAAAAAM/fernando-alonso-alpina.gif", text: "FOREVER YOUNG" },
+            "LANCE": { title: "WINDOW LICKER", url: "https://media.tenor.com/0vK3q8tXwWAAAAAM/lance-stroll.gif", text: "I HIT THE WALL" },
+            "STROLL": { title: "INTERGALACTIC", url: "https://media.tenor.com/0vK3q8tXwWAAAAAM/lance-stroll.gif", text: "DAD BOUGHT THE TEAM" },
+
+            // ALPINE
+            "PIERRE": { title: "LIKED BY PIERRE GASLY", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/pierre-gasly.gif", text: "INSTAGRAM KING" },
+            "GASLY": { title: "TRIPOD", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/pierre-gasly.gif", text: "ESTEBAN WHO?" },
+            "JACK": { title: "DOOOOOOHAN", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/alpine-f1.gif", text: "THE SURVIVOR" },
+            "DOOHAN": { title: "ROOKIE 2", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/alpine-f1.gif", text: "FINALLY GOT THE SEAT" },
+
+            // WILLIAMS (Sainz & Albon)
+            "CARLOS": { title: "SMOOTH OPERATOR", url: "https://media.tenor.com/SPrBwz2gB9AAAAAM/carlos-sainz-smooth-operator.gif", text: "SMOOOOOOOTH" },
+            "SAINZ": { title: "STOP INVENTING", url: "https://media.tenor.com/0vK3q8tXwWAAAAAM/carlos-sainz-ferrari.gif", text: "WILLIAMS ERA BEGINS" },
+            "ALEX": { title: "ALBONO", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/alex-albon.gif", text: "THE PET WHISPERER" },
+            "ALBON": { title: "RED HAIR", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/alex-albon.gif", text: "NO MORE APPENDIX" },
+
+            // HAAS
+            "OCON": { title: "5 SECOND PENALTY", url: "https://media.tenor.com/Q_y_tJ5_K9AAAAAM/esteban-ocon.gif", text: "FOR OCON" },
+            "ESTIE BESTIE": { title: "TEAM MATE WAR", url: "https://media.tenor.com/Q_y_tJ5_K9AAAAAM/esteban-ocon.gif", text: "DEFEND LIKE A LION" },
+            "OLLIE": { title: "SAUDI SUB", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/oliver-bearman.gif", text: "POINTS ON DEBUT" },
+            "BEARMAN": { title: "ROOKIE 3", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/oliver-bearman.gif", text: "UNCLE AYAO" },
+
+            // VCARB
+            "YUKI": { title: "RADIO RAGE", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/yuki-tsunoda.gif", text: "OPEN THE F***ING DOOR" },
+            "TSUNODA": { title: "CHEF YUKI", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/yuki-tsunoda.gif", text: "TINY BUT MIGHTY" },
+            "LIAM": { title: "SUPER SUB", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/liam-lawson.gif", text: "THE KIWI IS BACK" },
+            "LAWSON": { title: "NO RICCIARDO", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/liam-lawson.gif", text: "IT'S MY SEAT NOW" },
+
+            // SAUBER/AUDI
+            "HULK": { title: "HULKENBACK", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/nico-hulkenberg.gif", text: "PODIUM MAYBE?" },
+            "NICO": { title: "THE VETERAN", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/nico-hulkenberg.gif", text: "AUDI WAITING ROOM" },
+            "GABRIEL": { title: "ROOKIE 4", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/f2-champion.gif", text: "BRASIL IS BACK" },
+            "BORTOLETO": { title: "THE NEW SENNA?", url: "https://media.tenor.com/P0g3y6wW2AAAAAAM/f2-champion.gif", text: "NO PRESSURE KID" }
         };
 
         const RACES_2025 = [
@@ -462,6 +515,12 @@
             if (n.includes("LEWIS") || n.includes("CHARLES") || n.includes("HAMILTON") || n.includes("LECLERC")) return "FERRARI";
             if (n.includes("GEORGE") || n.includes("KIMI") || n.includes("RUSSELL") || n.includes("ANTONELLI")) return "MERCEDES";
             if (n.includes("LANDO") || n.includes("OSCAR") || n.includes("NORRIS") || n.includes("PIASTRI")) return "MCLAREN";
+            if (n.includes("ALONSO") || n.includes("LANCE") || n.includes("STROLL")) return "ASTON";
+            if (n.includes("GASLY") || n.includes("DOOHAN") || n.includes("PIERRE") || n.includes("JACK")) return "ALPINE";
+            if (n.includes("SAINZ") || n.includes("ALBON") || n.includes("CARLOS") || n.includes("ALEX")) return "WILLIAMS";
+            if (n.includes("OCON") || n.includes("BEARMAN") || n.includes("ESTEBAN") || n.includes("OLLIE")) return "HAAS";
+            if (n.includes("YUKI") || n.includes("LIAM") || n.includes("TSUNODA") || n.includes("LAWSON")) return "VCARB";
+            if (n.includes("HULK") || n.includes("GABRIEL") || n.includes("BORTOLETO")) return "SAUBER";
             return "UNKNOWN";
         }
 
@@ -469,15 +528,13 @@
             const driverTeam = identifyDriverTeam(driver);
             const p = PERSONALITIES[personalityKey];
             
-            // Special Case: Lewis & Bono (Lewis is Ferrari, Bono is Merc in 2025)
+            // Special Cases
             if (driver.toUpperCase().includes("LEWIS") && personalityKey === "BONO") {
                 return "The user is Lewis Hamilton. You are Bono. Lewis has left for Ferrari. You are still at Mercedes. You should act nostalgic, sad, or conflicted. 'Lewis? I'm not your engineer anymore mate...'";
             }
-             // Special Case: Max & Toto
             if (driver.toUpperCase().includes("MAX") && personalityKey === "TOTO") {
                 return "The user is Max Verstappen. You are Toto. You are rivals. You should be hostile, confused why he is calling, or tell him to get off the channel. 'Max? Why are you emailing me?'";
             }
-             // Special Case: Max & Christian
             if (driver.toUpperCase().includes("MAX") && personalityKey === "CHRISTIAN") {
                 return "The user is Max. You are Christian. You are fully supportive, plotting against rivals. 'Let's get them Max.'";
             }
@@ -510,6 +567,8 @@
 
             const upperUser = username.toUpperCase();
             let meme = MEME_DB[upperUser];
+            
+            // Partial match fallback for longer phrases
             if (!meme) {
                 for (const key in MEME_DB) { if (upperUser.includes(key)) { meme = MEME_DB[key]; break; } }
             }
@@ -557,8 +616,6 @@
             const p = PERSONALITIES[selectedPersonality];
             engineerDisplay.innerText = `RADIO: ${p.name}`;
             
-            // Check for rivalry welcome?
-            // For simplicity, we stick to the standard welcome, but the AI will react in chat.
             if (chatContainer.children.length === 0) addMessage(p.welcome, 'ai');
 
             if (animate) {
@@ -586,8 +643,6 @@
             
             const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelToTry}:generateContent?key=${API_KEY}`;
             const p = PERSONALITIES[selectedPersonality];
-            
-            // GENERATE CONTEXTUAL PROMPT
             const contextString = getRelationshipContext(currentUser, selectedPersonality);
             
             const finalPrompt = `
